@@ -78,7 +78,12 @@ public class PawnChessComponent extends ChessComponent {
         ChessboardPoint source = getChessboardPoint();
         int x = destination.getX()-source.getX();
         int y = Math.abs(destination.getY()-source.getY());
-        int q = 0;
+        if ((x >0)&&(getChessColor() == ChessColor.WHITE)) {
+            return false;
+        }
+        if ((x <0)&&(getChessColor() == ChessColor.BLACK)) {
+            return false;
+        }
         if (y == 0) {
             if (getChessColor() == ChessColor.BLACK) {
                 for (int i = source.getX()+1;i <= destination.getX();i++) {
@@ -111,9 +116,18 @@ public class PawnChessComponent extends ChessComponent {
             if (!(chessComponents[destination.getX()][destination.getY()] instanceof EmptySlotComponent)) {
                 return true;
             } else {
+                if ((getChessColor() == ChessColor.BLACK)&&(getChessboardPoint().getX() == 4)) {
+                    if ((chessComponents[source.getX()][destination.getY()] instanceof PawnChessComponent)&&(chessComponents[source.getX()][destination.getY()].getChessColor() == ChessColor.WHITE)) {
+                        return true;
+                    }
+                } else if ((getChessColor() == ChessColor.WHITE)&&(getChessboardPoint().getX() == 3)) {
+                    if ((chessComponents[source.getX()][destination.getY()] instanceof PawnChessComponent) && (chessComponents[source.getX()][destination.getY()].getChessColor() == ChessColor.BLACK)) {
+                        return true;
+                    }
+                }
                 return false;
             }
-        } else { // Not .
+        } else {
             return false;
         }
     }

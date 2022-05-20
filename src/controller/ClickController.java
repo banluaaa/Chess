@@ -4,12 +4,13 @@ package controller;
 import model.ChessComponent;
 import view.Chessboard;
 
+import static model.ChessComponent.rounds;
+
 public class ClickController {
     private final Chessboard chessboard;
     private ChessComponent first;
     public ChessComponent other;
-    public int rounds;
-
+    public static boolean paw = false;
     public ClickController(Chessboard chessboard) {
         this.chessboard = chessboard;
     }
@@ -49,7 +50,7 @@ public class ClickController {
         chessComponent.setEntered(false);
         other = chessComponent;
         other.repaint();
-    }
+    }//设置鼠标滑过显示
 
     /**
      * @param chessComponent 目标选取的棋子
@@ -57,6 +58,8 @@ public class ClickController {
      */
 
     private boolean handleFirst(ChessComponent chessComponent) {
+        if (chessComponent.getChessColor() == chessboard.getCurrentColor()) {
+        }//这是在干什么？
         return chessComponent.getChessColor() == chessboard.getCurrentColor();
     }
 
@@ -68,7 +71,7 @@ public class ClickController {
     private boolean handleSecond(ChessComponent chessComponent) {
         if (chessComponent.getChessColor() != chessboard.getCurrentColor() &&
                 first.canMoveTo(chessboard.getChessComponents(), chessComponent.getChessboardPoint())) {
-            rounds++;
+            rounds = rounds + 0.5;
         }
         return chessComponent.getChessColor() != chessboard.getCurrentColor() &&
                 first.canMoveTo(chessboard.getChessComponents(), chessComponent.getChessboardPoint());
